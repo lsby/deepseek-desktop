@@ -2,9 +2,9 @@ import path from 'path'
 import { 命令 } from './task-runner'
 
 export let 项目根目录 = path.resolve(import.meta.dirname, '../../..')
-export let 完整调试环境 = { DEBUG: '@lsby:*,@lsby:playground-ts-app:*,-@lsby:ts-env*' }
+export let 完整调试环境 = { DEBUG: '@lsby:*,@lsby:deepseek-desktop:*,-@lsby:ts-env*' }
 export let 生成调试环境 = { DEBUG: '@lsby:*' }
-export let 测试调试环境 = { DEBUG: '@lsby:*,@lsby:playground-ts-app:*,-@lsby:ts-env*,-*:trace' }
+export let 测试调试环境 = { DEBUG: '@lsby:*,@lsby:deepseek-desktop:*,-@lsby:ts-env*,-*:trace' }
 export let Web开发环境文件 = '.env/.env.development.web'
 export let Electron开发环境文件 = '.env/.env.development.electron'
 export let 纯前端开发环境文件 = '.env/.env.development.pure-frontend'

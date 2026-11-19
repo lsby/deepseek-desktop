@@ -124,7 +124,7 @@ namespace LsbyLauncher
             Application.SetCompatibleTextRenderingDefault(false);
 
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string appPath = Path.Combine(baseDir, "app", "lsby-playground-ts-app.exe");
+            string appPath = Path.Combine(baseDir, "app", "lsby-deepseek-desktop.exe");
             string markerPath = Path.Combine(baseDir, "data", "update-in-progress");
 
             if (File.Exists(markerPath))
@@ -140,7 +140,7 @@ namespace LsbyLauncher
             }
 
             WriteLog("==================================================");
-            WriteLog("lsby-playground-ts-app 启动引导器");
+            WriteLog("lsby-deepseek-desktop 启动引导器");
             WriteLog("==================================================");
 
             // 2. 准备托盘图标
@@ -190,7 +190,7 @@ namespace LsbyLauncher
 
             if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("DEBUG")))
             {
-                Environment.SetEnvironmentVariable("DEBUG", "@lsby:*,@lsby:playground-ts-app:*");
+                Environment.SetEnvironmentVariable("DEBUG", "@lsby:*,@lsby:deepseek-desktop:*");
             }
 
             Process appProcess = new Process();
@@ -258,7 +258,7 @@ namespace LsbyLauncher
             {
                 ShowConsole();
                 WriteLog("\n[引导器错误] 启动失败: " + ex.Message);
-                WriteLog("确保 app/lsby-playground-ts-app.exe 存在。");
+                WriteLog("确保 app/lsby-deepseek-desktop.exe 存在。");
                 WriteLog("按任意键关闭...");
                 if (isConsoleVisible)
                 {

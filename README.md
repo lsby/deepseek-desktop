@@ -1,4 +1,4 @@
-# lsby-playground-ts-app
+# lsby-deepseek-desktop
 
 一个支持多种运行目标的全栈 TypeScript 项目模板。相同的接口与业务代码可以运行在 Node.js 服务端、浏览器 Worker、Electron 和 Node.js SEA 中。
 

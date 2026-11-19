@@ -1,10 +1,10 @@
 {
-  "name": "@lsby/playground-ts-app",
+  "name": "@lsby/deepseek-desktop",
   "version": "0.0.0",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/lsby/playground-ts-app.git"
+    "url": "https://github.com/lsby/deepseek-desktop.git"
   },
   "type": "module",
   "main": "./dist/src/electron.js",
@@ -14,7 +14,7 @@
     "./src/global/plugin.ts": "./src/web/mock/plugin-mock.ts"
   },
   "bin": {
-    "lsby-playground-ts-app": "dist/src/cli.js"
+    "lsby-deepseek-desktop": "dist/src/cli.js"
   },
   "files": [
     "dist"
@@ -158,8 +158,8 @@
   },
   "build": {
     "npmRebuild": false,
-    "appId": "lsby.playground.ts.app",
-    "productName": "lsby-playground-ts-app",
+    "appId": "lsby.deepseek.desktop",
+    "productName": "lsby-deepseek-desktop",
     "asar": false,
     "files": [
       "dist/**/*",

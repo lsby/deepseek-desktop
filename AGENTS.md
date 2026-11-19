@@ -1,4 +1,4 @@
-# lsby-playground-ts-app 开发导览
+# lsby-deepseek-desktop 开发导览
 
 这是一个具有多个部署目标的全栈 TypeScript 应用程序:
 

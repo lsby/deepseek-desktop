@@ -1,6 +1,6 @@
 {
   "env": {
-    "DEBUG": "@lsby:*,@lsby:playground-ts-app:*",
+    "DEBUG": "@lsby:*,@lsby:deepseek-desktop:*",
     "ENV_FILE_PATH": "./.env/.env.test-web"
   }
 }

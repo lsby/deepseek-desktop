@@ -110,15 +110,15 @@ async function 执行构建(): Promise<void> {
     } else {
       let 子项组 = fs.existsSync(待清理路径) === true ? fs.readdirSync(待清理路径) : []
       let 构建程序目录名 =
-        子项组.find((项) => fs.existsSync(path.join(待清理路径, 项, 'lsby-playground-ts-app.app')) === true) ??
+        子项组.find((项) => fs.existsSync(path.join(待清理路径, 项, 'lsby-deepseek-desktop.app')) === true) ??
         子项组.find((项) => 项.startsWith('mac'))
       if (构建程序目录名 === undefined) {
         throw new Error('❌ 未找到 electron-builder 生成的 macOS .app 目录')
       }
-      let 源App路径 = path.join(待清理路径, 构建程序目录名, 'lsby-playground-ts-app.app')
+      let 源App路径 = path.join(待清理路径, 构建程序目录名, 'lsby-deepseek-desktop.app')
       生成目录 = path.join(待清理路径, 'mac-portable')
       确保目录存在(生成目录)
-      let 目标App路径 = path.join(生成目录, 'lsby-playground-ts-app.app')
+      let 目标App路径 = path.join(生成目录, 'lsby-deepseek-desktop.app')
       if (fs.existsSync(目标App路径) === true) {
         fs.rmSync(目标App路径, { recursive: true, force: true })
       }
@@ -142,7 +142,7 @@ async function 执行构建(): Promise<void> {
     if (fs.existsSync(path.dirname(winResourcesEnv)) === true) {
       环境目标路径组.push(winResourcesEnv)
     }
-    let appResourcesEnv = path.join(生成目录, 'lsby-playground-ts-app.app/Contents/Resources/app/.env')
+    let appResourcesEnv = path.join(生成目录, 'lsby-deepseek-desktop.app/Contents/Resources/app/.env')
     if (fs.existsSync(path.dirname(appResourcesEnv)) === true) {
       环境目标路径组.push(appResourcesEnv)
     }
@@ -158,7 +158,7 @@ async function 执行构建(): Promise<void> {
 
     // 复制数据库
     let 数据库目标路径组: string[] = [path.join(生成目录, 'data/db')]
-    let appResourcesDb = path.join(生成目录, 'lsby-playground-ts-app.app/Contents/Resources/app/db')
+    let appResourcesDb = path.join(生成目录, 'lsby-deepseek-desktop.app/Contents/Resources/app/db')
     if (fs.existsSync(path.dirname(appResourcesDb)) === true) {
       数据库目标路径组.push(appResourcesDb)
     }
@@ -174,7 +174,7 @@ async function 执行构建(): Promise<void> {
     let appPrisma目标目录 =
       process.platform === 'win32'
         ? path.join(生成目录, 'app')
-        : path.join(生成目录, 'lsby-playground-ts-app.app/Contents/Resources/app')
+        : path.join(生成目录, 'lsby-deepseek-desktop.app/Contents/Resources/app')
     fs.cpSync(path.join(项目根目录, 'prisma'), path.join(appPrisma目标目录, 'prisma'), { recursive: true })
     fs.copyFileSync(path.join(项目根目录, 'prisma.config.ts'), path.join(appPrisma目标目录, 'prisma.config.ts'))
     console.log('✅ 已复制 Prisma Schema 与 migrations')
@@ -205,9 +205,9 @@ async function 执行构建(): Promise<void> {
 
     // 在 macOS 下为 .app 包挂载内置启动引导器，解决 Finder 直接双击时 launchd 不传 ENV_FILE_PATH 与 cwd=/ 的问题
     if (process.platform === 'darwin') {
-      let macOsBinDir = path.join(生成目录, 'lsby-playground-ts-app.app/Contents/MacOS')
-      let 原生可执行文件 = path.join(macOsBinDir, 'lsby-playground-ts-app')
-      let 真实二进制文件 = path.join(macOsBinDir, 'lsby-playground-ts-app-bin')
+      let macOsBinDir = path.join(生成目录, 'lsby-deepseek-desktop.app/Contents/MacOS')
+      let 原生可执行文件 = path.join(macOsBinDir, 'lsby-deepseek-desktop')
+      let 真实二进制文件 = path.join(macOsBinDir, 'lsby-deepseek-desktop-bin')
 
       if (fs.existsSync(原生可执行文件) === true) {
         if (fs.existsSync(真实二进制文件) === true) {
@@ -231,8 +231,8 @@ async function 执行构建(): Promise<void> {
           '    cd "$APP_RESOURCES_DIR"',
           '  fi',
           'fi',
-          'export DEBUG="@lsby:*,@lsby:playground-ts-app:*"',
-          'exec "$DIR/lsby-playground-ts-app-bin" "$@"',
+          'export DEBUG="@lsby:*,@lsby:deepseek-desktop:*"',
+          'exec "$DIR/lsby-deepseek-desktop-bin" "$@"',
         ].join('\n')
         fs.writeFileSync(原生可执行文件, appLauncher脚本, { encoding: 'utf8', mode: 0o755 })
         console.log(`✅ 已为 .app 成功注入内置启动引导器`)
@@ -245,7 +245,7 @@ async function 执行构建(): Promise<void> {
       let PushProdCli路径 =
         process.platform === 'win32'
           ? path.join(生成目录, 'app/resources/app/dist/scripts/db/push-prod.js')
-          : path.join(生成目录, 'lsby-playground-ts-app.app/Contents/Resources/app/dist/scripts/db/push-prod.js')
+          : path.join(生成目录, 'lsby-deepseek-desktop.app/Contents/Resources/app/dist/scripts/db/push-prod.js')
       let Prisma环境 = {
         ...process.env,
         DB_PATH_PRISMA: `file:${path.join(生成目录, 'data/db/prod-electron.db').replaceAll('\\', '/')}`,
@@ -263,14 +263,14 @@ async function 执行构建(): Promise<void> {
       // 生成 start.exe (C# 引导器)
       let cscPath = 寻找内置Csc编译器()
       let launcher源文件 = path.join(__当前目录名, 'launcher', 'launcher.cs')
-      let runExe路径 = path.join(生成目录, 'lsby-playground-ts-app.exe')
+      let runExe路径 = path.join(生成目录, 'lsby-deepseek-desktop.exe')
 
       if (cscPath === null || fs.existsSync(cscPath) === false) {
-        throw new Error(`未找到 C# 编译器 csc.exe，无法编译引导器 lsby-playground-ts-app.exe`)
+        throw new Error(`未找到 C# 编译器 csc.exe，无法编译引导器 lsby-deepseek-desktop.exe`)
       } else if (fs.existsSync(launcher源文件) === false) {
-        throw new Error(`未找到引导器源码: ${launcher源文件}，无法编译 lsby-playground-ts-app.exe`)
+        throw new Error(`未找到引导器源码: ${launcher源文件}，无法编译 lsby-deepseek-desktop.exe`)
       } else {
-        console.log('✅ 正在编译引导器 lsby-playground-ts-app.exe ...')
+        console.log('✅ 正在编译引导器 lsby-deepseek-desktop.exe ...')
         // 使用 Windows GUI 子系统，默认只显示托盘图标；控制台由引导器按需创建
         execSync(
           `"${cscPath}" /nologo /target:winexe /out:"${runExe路径}" /reference:System.Windows.Forms.dll /reference:System.Drawing.dll "${launcher源文件}"`,

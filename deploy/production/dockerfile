@@ -75,4 +75,4 @@ COPY --from=builder /opt/app/prisma /opt/app/prisma
 COPY --from=builder /opt/app/prisma.config.ts /opt/app/prisma.config.ts
 COPY --from=builder /opt/app/release-info.json /opt/app/release-info.json
 
-CMD ["sh", "-c", "mkdir -p /opt/app/db; if [ ! -f /opt/app/db/prod-web.db ]; then echo 'Initializing database from default'; cp /opt/app/db-default-prod-web.db /opt/app/db/prod-web.db; else echo 'Database already exists'; fi; ENV_FILE_PATH=./.env/.env.production.web node ./dist/scripts/db/push-prod.js && exec env DEBUG='@lsby:*,@lsby:playground-ts-app:*,-@lsby:ts-env*' ENV_FILE_PATH=./.env/.env.production.web node ./dist/src/server.js"]
+CMD ["sh", "-c", "mkdir -p /opt/app/db; if [ ! -f /opt/app/db/prod-web.db ]; then echo 'Initializing database from default'; cp /opt/app/db-default-prod-web.db /opt/app/db/prod-web.db; else echo 'Database already exists'; fi; ENV_FILE_PATH=./.env/.env.production.web node ./dist/scripts/db/push-prod.js && exec env DEBUG='@lsby:*,@lsby:deepseek-desktop:*,-@lsby:ts-env*' ENV_FILE_PATH=./.env/.env.production.web node ./dist/src/server.js"]
