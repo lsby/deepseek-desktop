@@ -385,10 +385,10 @@ expand_validated_zip() {
 
   local staged_migrations="$staged_app/Contents/Resources/app/prisma/migrations"
   if [ -d "$staged_migrations" ] && [ "$(ls -A "$staged_migrations" 2>/dev/null)" ]; then
-    local prisma_cli="$staged_app/Contents/Resources/app/node_modules/prisma/build/index.js"
+    local push_prod_js="$staged_app/Contents/Resources/app/dist/scripts/db/push-prod.js"
     local prisma_config="$staged_app/Contents/Resources/app/prisma.config.ts"
-    if [ ! -f "$prisma_cli" ]; then
-      log_error "ZIP 缺少 Prisma CLI: $prisma_cli"
+    if [ ! -f "$push_prod_js" ]; then
+      log_error "ZIP 缺少 push-prod.js: $push_prod_js"
       exit 1
     fi
     if [ ! -f "$prisma_config" ]; then

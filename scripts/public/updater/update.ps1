@@ -1,4 +1,4 @@
-param(
+﻿param(
   [string]$ZipUrl = '',
   [string]$LocalZip = '',
   [string]$ExpectedSha256 = '',
@@ -214,11 +214,8 @@ function Expand-ValidatedZip([string]$ZipPath) {
   }
   $stagedAppDir = Join-Path $StagingDir 'app'
   if (@(Get-PrismaMigrationNames $stagedAppDir).Count -gt 0) {
-    if (-not (Test-Path -LiteralPath (Join-Path $stagedAppDir 'resources\app\node_modules\prisma\build\index.js') -PathType Leaf)) {
-      throw 'ZIP 缺少 Prisma CLI'
-    }
-    if (-not (Test-Path -LiteralPath (Join-Path $stagedAppDir 'resources\app\node_modules\@prisma\studio-core\dist\data\bff\index.cjs') -PathType Leaf)) {
-      throw 'ZIP 中的 Prisma CLI 依赖不完整'
+    if (-not (Test-Path -LiteralPath (Join-Path $stagedAppDir 'resources\app\dist\scripts\db\push-prod.js') -PathType Leaf)) {
+      throw 'ZIP 缺少 push-prod.js'
     }
     if (-not (Test-Path -LiteralPath (Join-Path $stagedAppDir 'prisma.config.ts') -PathType Leaf)) { throw 'ZIP 缺少 prisma.config.ts' }
   }
